@@ -23,6 +23,18 @@ public class ProductPage extends DriverManager {
 	public static By confirmAccountNumberLocator = By.xpath("//label[text()='Confirm Account Number']//following-sibling::input[@type='text']");
 	public static By phoneLocatoor = By.xpath("//input[@type='tel']");
 	public static By uploadFileLocator = By.xpath("//div[contains(@class,'c-fileUpload')]//button[contains(@class,'secondary_btn')]//following-sibling::button");
+	public static By addBankAccountLocator = By.xpath("//input[@value='Add Bank Account']");
+	public static By cancelLocator = By.xpath("//div[@class='modal-footer ng-scope']//input[@value='Cancel']");
+	
+	//CashAccountLocator
+	
+	public static By withdrawLocator = By.xpath("//button[text()='Withdraw']");
+	public static By withdrawFundsHeaderLocator = By.xpath("//h2[text()='Withdraw Funds']");
+	public static By noteLocator = By.xpath("//p[text()='Note']");
+	public static By clickHereLocator = By.xpath("//a[text()='Click here']");
+	public static By addNonUSBankAccountLocator = By.xpath("//h3[text()='Add a Non-US Bank Account']");
+	
+	
 	public ProductPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
 
@@ -41,6 +53,24 @@ public class ProductPage extends DriverManager {
 		}
 
 	}
+	
+	public static void clickOnPaymentsFeature(String input) {
+		try {
+			if(!input.isBlank()&&!input.isEmpty()) {
+			implicityWait(ElementTitle, 5);
+			
+			WebElement element = driver().findElement(By.xpath("//ul[@class='module_tabs']//li//a[text()='" + input + "']"));
+			element.click();
+			}
+			else {
+				System.out.println("WebElement not found");
+			}
+		} catch (ElementClickInterceptedException e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+
+	}
+	
 	public static void selectAddTransferMethodDropdown(String value) {
 		if(!value.isBlank()&&!value.isEmpty()) {
 			driver().findElements(By.xpath("//ul[@class='module_list dropdown-menu']//li//a[contains(text(),'"+value+"')]"));
@@ -97,13 +127,25 @@ public class ProductPage extends DriverManager {
 			
 			driver().findElement(phoneLocatoor).sendKeys(RandomStringUtils.randomNumeric(10));
 			
-			driver().findElement(uploadFileLocator).
-			
+			driver().findElement(uploadFileLocator).sendKeys("/home/digvijay/Downloads/sample.pdf");
+	//		driver().findElement(addBankAccountLocator).click();
+			driver().findElement(cancelLocator).click();		
+		}
+	
+	}
+	
+	public static void clickOnElement(By locator,long time) {
+		
+		try {
+			explictWait(locator, time);
+			if(driver().findElement(locator).isDisplayed()&&driver().findElement(locator).isEnabled()) {
+				driver().findElement(locator).click();
+			}
+		}catch(ElementClickInterceptedException e) {
+			System.out.println("Element not interactable ");
 		}
 		
 	}
-	
-	
 	
 
 }
