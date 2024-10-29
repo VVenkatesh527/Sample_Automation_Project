@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.app.Pages.BasePage;
 import com.app.Pages.ProductPage;
@@ -57,18 +59,22 @@ public class DriverManager {
 		basePage = null;
 	}
 	
-	public static void implicityWait(By locator,int i) {
+	public static void implicityWait(By locator,long seconds) {
 		
-		if(!driver().findElement(locator).isDisplayed()) {
-		
-		driver().manage().timeouts().implicitlyWait(Duration.ofSeconds(i));
+		driver().manage().timeouts().implicitlyWait(Duration.ofSeconds(seconds));
+		if(driver().findElement(locator).isDisplayed()) {
 		driver().findElement(locator).click();
-		
 		}
 		else {
-			System.out.println("The Given locator not found");
+			System.out.println("The locator not found");
 		}
+	}
+	
+public static void explictWait(By locator,long seconds) {
 		
+		WebDriverWait wait = new WebDriverWait(driver(), Duration.ofSeconds(seconds));
+			wait.until(ExpectedConditions.visibilityOf(driver().findElement(locator)));
+			
 	}
 	
 }

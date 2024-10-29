@@ -6,7 +6,7 @@
       <class name="PageTest.PaymentsPageTest">
         <methods>
           <include name="tearDown"/>
-          <include name="productTest"/>
+          <include name="cashAccountTest"/>
           <include name="launch"/>
         </methods>
       </class> <!-- PageTest.PaymentsPageTest -->
